@@ -1,0 +1,102 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+
+<body>
+    <main id="main" class="main">
+
+<style>
+    body {
+        background: linear-gradient(135deg, #eef2f3, #8fa9b7);
+        min-height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        max-width: 700px;
+        margin: 50px auto;
+    }
+    h1 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #2c3e50;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .details {
+        font-size: 16px;
+        color: #34495e;
+        line-height: 1.8;
+    }
+    .details strong {
+        color: #2c3e50;
+    }
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 5px;
+        color: white;
+        transition: background-color 0.3s ease;
+        text-align: center;
+    }
+    .btn-edit {
+        background-color: #f39c12;
+    }
+    .btn-edit:hover {
+        background-color: #e67e22;
+    }
+    .btn-delete {
+        background-color: #e74c3c;
+    }
+    .btn-delete:hover {
+        background-color: #c0392b;
+    }
+    .btn-back {
+        background-color: #34495e;
+    }
+    .btn-back:hover {
+        background-color: #2c3e50;
+    }
+</style>
+
+<div class="container">
+    <h1>Détails de l'Innovation</h1>
+
+    <div class="details">
+        <p><strong>ID Membre :</strong> {{ innovation.idMembre }}</p>
+        <p><strong>Nom du Club :</strong> {{ innovation.nomClub }}</p>
+        <p><strong>Description :</strong> {{ innovation.descriptionInnovation }}</p>
+        <p><strong>Titre :</strong> {{ innovation.titre }}</p>
+        <p><strong>Date de Création :</strong> {{ innovation.dateCreationInnovation|date('Y-m-d') }}</p>
+        <p><strong>Status :</strong> 
+            <span class="badge {{ innovation.statusInnovation == 'Approuvé' ? 'bg-success' : (innovation.statusInnovation == 'Rejeté' ? 'bg-danger' : 'bg-warning text-dark') }}">
+                {{ innovation.statusInnovation }}
+            </span>
+        </p>
+    </div>
+
+    <div class="buttons">
+        <a href="{{ path('admin_innovation_edit', {'id': innovation.id}) }}" class="btn btn-edit">Modifier</a>
+        <form action="{{ path('innovation_delete', {'id': innovation.id}) }}" method="post" style="display:inline;">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ innovation.id) }}">
+            <button type="submit" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette innovation ?');">Supprimer</button>
+        </form>
+        <a href="{{ path('admin_innovation_index') }}" class="btn btn-back">Retour à la liste</a>
+    </div>
+</div>
+
+</main>
+</body>
+{% endblock %}

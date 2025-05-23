@@ -1,0 +1,340 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="{{ asset('img/favicon.png') }}" rel="icon">
+  <link href="{{ asset('img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+</head>
+
+<body class="starter-page-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="{{ asset('img/logo.png') }}" alt="">
+        <h1 class="sitename">ClubNet</h1>
+      </a>
+
+    <nav id="navmenu" class="navmenu">
+        <ul>
+        <li><a href="{{path('app_homepage')}}" >Home</a></li>
+        <li><a href="{{path('app_club_index')}}">Club</a></li>
+        <li><a href="{{path('app_feedback_index')}}">Feedback</a></li>
+        <li><a href="{{ path('app_partenaire_index') }}">Partenaire</a></li>
+        <li><a href="{{ path('user_events_index') }}">Event</a></li>
+        <li><a href="{{ path('user_innovation_index') }}">Innovation</a></li>
+        <li><a href="{{ path('app_ressourcess') }}">Resources</a></li>
+        <li><a href="{{path('app_reservationss')}}" >Reservations</a></li>
+        <li><a href="{{path('app_contact')}}" >Contact</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-toggle">Options</a>
+            <ul class="dropdown-menu">
+                <li><a href="{{path('app_login')}}">Sign in</a></li>
+                <li><a href="{{path('app_register')}}">Register</a></li>
+            </ul>
+        </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background">
+      <div class="container position-relative">
+        <h1>Ajouter une Innovation</h1>
+        <p>Remplissez le formulaire ci-dessous pour ajouter une nouvelle Innovation.</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="{{ path('innovation_index') }}">Innovation</a></li>
+            <li class="current">Ajouter une Innovation</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+    
+
+<style>
+    body {
+        background: linear-gradient(135deg, #eef2f3, #8fa9b7);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .container {
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 50px auto;
+    }
+    h1 {
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+        color: #2c3e50;
+    }
+    form label {
+        font-weight: bold;
+        display: block;
+        margin-top: 15px;
+        color: #34495e;
+    }
+    form input, form textarea, form select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #2c3e50;
+    }
+    form input:focus, form textarea:focus, form select:focus {
+        border-color: #27ae60;
+        outline: none;
+        box-shadow: 0 0 5px rgba(39, 174, 96, 0.5);
+    }
+    .btn-submit {
+        background-color: #27ae60;
+        border: none;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .btn-submit:hover {
+        background-color: #229954;
+    }
+    .btn-back {
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+        font-size: 14px;
+        text-decoration: none;
+        color: #34495e;
+        transition: color 0.3s ease;
+    }
+    .btn-back:hover {
+        color: #27ae60;
+    }
+    .error {
+        color: red;
+        font-size: 14px;
+    }
+    form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #2c3e50;
+    }
+
+</style>
+
+<div class="container">
+    <h1>Créer une Innovation</h1>
+
+    <form action="{{ path('user_innovation_new') }}" method="post" id="innovationForm">
+        <div id="errors"></div> <!-- Place for form validation errors -->
+
+        <label for="idMembre">ID du Membre (Carte d'Identité Nationale)</label>
+        <input type="text" id="idMembre" name="idMembre" value="{{ innovation.idMembre }}" required>
+        <div id="idMembreError" class="error"></div>
+
+        <label for="nomClub">Nom du Club</label>
+        <input type="text" id="nomClub" name="nomClub" value="{{ innovation.nomClub }}" required>
+        <div id="nomClubError" class="error"></div>
+
+        <label for="titre">Titre</label>
+        <input type="text" id="titre" name="titre" value="{{ innovation.titre }}" required>
+        <div id="titreError" class="error"></div>
+
+        <label for="descriptionInnovation">Description</label>
+        <textarea id="descriptionInnovation" name="descriptionInnovation" rows="4" required>{{ innovation.descriptionInnovation }}</textarea>
+        <div id="descriptionInnovationError" class="error"></div>
+
+        <label for="dateCreationInnovation">Date de Création</label>
+        <input type="date" id="dateCreationInnovation" name="dateCreationInnovation" value="{{ innovation.dateCreationInnovation|date('Y-m-d') }}" required>
+        <div id="dateCreationInnovationError" class="error"></div>
+
+        <label for="statusInnovation">Statut</label>
+        <select id="statusInnovation" name="statusInnovation" disabled>
+            <option value="En attente" selected>En attente</option>
+        </select>
+
+        <!-- Nouveau champ pour l'email -->
+        <label for="userEmail">Email de l'Utilisateur</label>
+        <input type="email" id="userEmail" name="userEmail" placeholder="Entrez votre email pour recevoir la confirmation" required>
+        <div id="userEmailError" class="error"></div>
+
+
+        <label for="events">Événement</label>
+<select id="events" name="events" class="form-control" required>
+    <option value="">Choisissez un événement</option>
+    {% for event in events %}
+        <option value="{{ event.id }}">{{ event.nomEvent }}</option>
+    {% endfor %}
+</select>
+<div id="eventsError" class="error">
+    {{ errors.events is defined ? errors.events : '' }}
+</div>
+
+
+        <button type="submit" class="btn-submit">Créer</button>
+    </form>
+
+    <a href="{{ path('user_innovation_index') }}" class="btn-back">Retour à la liste des innovations</a>
+</div>
+
+<script>
+    document.getElementById('innovationForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent form submission to handle validation
+        
+        let isValid = true;
+        const errors = {}; // Object to store errors
+
+        // Reset previous errors
+        document.querySelectorAll('.error').forEach(function (errorElement) {
+            errorElement.textContent = '';
+        });
+
+        // Validation logic
+        const idMembre = document.getElementById('idMembre');
+        const idMembreValue = idMembre.value.trim();
+        if (!idMembreValue) {
+            errors.idMembre = "L'ID du membre est requis.";
+        } else if (!/^\d{8}$/.test(idMembreValue)) {
+            errors.idMembre = "L'ID du membre doit être un chiffre de 8 caractères.";
+        }
+
+        const nomClub = document.getElementById('nomClub');
+        if (!nomClub.value.trim()) {
+            errors.nomClub = "Le nom du club est requis.";
+        }
+
+        const titre = document.getElementById('titre');
+        if (!titre.value.trim()) {
+            errors.titre = "Le titre est requis.";
+        }
+
+        const descriptionInnovation = document.getElementById('descriptionInnovation');
+        if (!descriptionInnovation.value.trim()) {
+            errors.descriptionInnovation = "La description est requise.";
+        }
+
+        const dateCreationInnovation = document.getElementById('dateCreationInnovation');
+        const currentDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+        if (dateCreationInnovation.value !== currentDate) {
+            errors.dateCreationInnovation = "La date de création doit être aujourd'hui.";
+        }
+
+        const userEmail = document.getElementById('userEmail');
+        const userEmailValue = userEmail.value.trim();
+        if (!userEmailValue) {
+            errors.userEmail = "L'email de l'utilisateur est requis.";
+        } else if (!/\S+@\S+\.\S+/.test(userEmailValue)) {
+            errors.userEmail = "Veuillez entrer un email valide.";
+        }
+
+        // Display errors if any
+        if (Object.keys(errors).length > 0) {
+            isValid = false;
+            for (const field in errors) {
+                const errorElement = document.getElementById(field + 'Error');
+                if (errorElement) {
+                    errorElement.textContent = errors[field];
+                }
+            }
+        }
+
+        // Submit the form if valid
+        if (isValid) {
+            event.target.submit();
+        }
+    });
+</script>
+    </section><!-- End Add Partner Section -->
+
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">clubs</h3>
+      <p>Passez à l’action, ouvrez-vous au monde et rencontrez de nouveaux amis</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-skype"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">clubs</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
+  <script src="{{ asset('vendor/aos/aos.js') }}"></script>
+  <script src="{{ asset('vendor/purecounter/purecounter_vanilla.js') }}"></script>
+  <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ asset('vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ asset('vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+  <script src="{{ asset('vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+
+  <!-- Main JS File -->
+  <script src="{{ asset('js/main.js') }}"></script>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,55 @@
+security:
+    # Password hashers: For encoding user passwords
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    # Providers: How users are loaded
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    # Firewalls: Define security rules for different parts of the app
+    firewalls:
+        # Developer tools (profiler, web debug toolbar, etc.)
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        # Main application firewall
+        main:
+            lazy: true
+            provider: app_user_provider
+
+            # Enable form-based login
+            form_login:
+                login_path: app_login  # The route name for the login page
+                check_path: app_login  # Where Symfony checks credentials
+                default_target_path: app_homepage  # Redirect after successful login
+
+            logout:
+                path: app_logout  # The route name for logout
+                target: app_homepage # Redirect after successful
+
+            # Remember Me functionality
+            remember_me:
+                secret: '%env(APP_SECRET)%'  # Secret key for remember-me tokens
+                lifetime: 604800  # 1 week (in seconds)
+                path: app_login  # The route name for the login page
+
+    # Access control rules: Who can access what
+    access_control:
+        - { path: admin, roles: ROLE_ADMIN }  # Only users with ROLE_ADMIN can access /admin
+        - { path: app_login, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allow anyone to access login
+        - { path: app_logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: app_register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         # Allow logout for all
+
+    # Role hierarchy: Role inheritance
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+    # Optional session fixation strategy
+    session_fixation_strategy: migrate

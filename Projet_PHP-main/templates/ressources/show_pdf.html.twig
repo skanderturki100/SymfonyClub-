@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Ressources</title>
+    <style>
+        /* Corps de la page */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: white;
+        }
+
+        /* En-tête */
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #fff;
+            margin: 0;
+            font-weight: bold;
+            background-color: #800020; /* Rouge bordeaux */
+            padding: 8px 15px;
+            text-align: center;
+        }
+
+        /* Conteneur principal */
+        .content-container {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            position: absolute;
+            bottom: 40px;
+            width: 100%;
+        }
+
+        .signature {
+            text-align: right;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .signature-line {
+            border-top: 2px solid #000;
+            width: 200px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Sélectionner uniquement la première page */
+        @page {
+            margin-bottom: 100px;
+        }
+
+        /* Footer uniquement sur la première page */
+        body:first-of-type .footer {
+            display: block;
+        }
+        
+        /* Caché sur les pages suivantes */
+        .footer {
+            display: none;
+        }
+
+        /* Style pour la table et autres éléments */
+        .table-wrapper {
+            max-height: calc(100vh - 200px); /* Ajuster pour laisser de la place pour la signature et le footer */
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 5px;
+            background-color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- En-tête -->
+    <div class="header">
+        <h1>Rapport des Ressources Disponibles</h1>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="content-container">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Quantité</th>
+                        <th>État</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ressource in ressources %}
+                    <tr>
+                        <td>{{ ressource.nom }}</td>
+                        <td>{{ ressource.description }}</td>
+                        <td>{{ ressource.quantite }}</td>
+                        <td>{{ ressource.etat }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer visible uniquement sur la première page -->
+    <div class="footer">
+        <p>www.esprit.tn</p>
+    </div>
+
+    <!-- Signature -->
+    <div class="signature">
+        <p>    Signature </p>
+        <div class="signature-line"></div>
+    </div>
+
+</body>
+</html>

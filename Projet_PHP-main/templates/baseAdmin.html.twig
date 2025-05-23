@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Dashboard - Admin{% endblock %}</title>
+
+    {% block stylesheets %}
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Nunito|Poppins" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/quill/quill.snow.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/quill/quill.bubble.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/simple-datatables/style.css') }}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    {% endblock %}
+
+    {% block javascripts %}
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('vendor/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/chart.js/chart.umd.js') }}"></script>
+    <script src="{{ asset('vendor/echarts/echarts.min.js') }}"></script>
+    <script src="{{ asset('vendor/quill/quill.js') }}"></script>
+    <script src="{{ asset('vendor/simple-datatables/simple-datatables.js') }}"></script>
+    <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{ asset('js/maine.js') }}"></script>
+    {% endblock %}
+</head>
+
+<body>
+
+    {% block header %}
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="#" class="logo d-flex align-items-center">
+                <img src="{{ asset('img/favicon.jpg') }}" alt="">
+                <span class="d-none d-lg-block">ClubNet</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div>
+
+        <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+                <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-primary badge-number">4</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                        <li class="dropdown-header">
+                            You have 4 new notifications
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <!-- Notification items here -->
+                        <li class="dropdown-footer"><a href="#">Show all notifications</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span class="badge bg-success badge-number">3</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                        <li class="dropdown-header">
+                            You have 3 new messages
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <!-- Message items here -->
+                        <li class="dropdown-footer"><a href="#">Show all messages</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown pe-3">
+                    {% if app.user %}
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="{{ asset('img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ app.user.fullName }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>{{ app.user.fullName }}</h6>
+                            <span>{{ app.user.roles[0] }}</span>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li>
+                        <a class="dropdown-item d-flex align-items-center" href="{{ path('admin_user_edit', { 'id': app.user.idUser }) }}">
+                            <i class="bi bi-person"></i>
+                                <span>My Profile</span>
+                            </a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ logout_path('main') }}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ path('app_homepage')}}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Back</span>
+                            </a>
+                        </li>
+                    </ul>
+                    {% else %}
+                    <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </header>
+    {% endblock %}
+
+    {% block sidebar %}
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{path('admin')}}">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>Club Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a href="{{ path('admin_add_club') }}"><i class="bi bi-circle"></i><span>Add Club</span></a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Feedback Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a href="{{path('admin_feedback_index')}}"><i class="bi bi-circle"></i><span>Consult Feedback</span></a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Ressource Management</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{path('app_ressources')}}"><i class="bi bi-circle"></i><span>List Ressources</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('app_reservations')}}"><i class="bi bi-circle"></i><span>List Reservations</span>
+            
+            <a href="{{path('app_statistiques')}}"><i class="bi bi-circle"></i><span>Consult Statistiques </span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Partenaire Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a href="{{path('admin_partenaire_index')}}"><i class="bi bi-circle"></i><span>Add Partenaire</span></a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Innovation Managment</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a href="{{path('admin_innovation_index')}}"><i class="bi bi-circle"></i><span>Innovation List</span></a></li>
+                </ul>
+                <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a href="{{path('admin_innovation_new')}}"><i class="bi bi-circle"></i><span>Add Innovation</span></a></li>
+                </ul>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Events Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                
+                <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a href="{{ path('admin_events_index') }}"><i class="bi bi-circle"></i><span>Events List</span></a></li>
+                </ul>
+
+                </ul>
+                    <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li><a href="{{ path('admin_events_new') }}"><i class="bi bi-circle"></i><span>Add Event</span></a></li>
+                </ul>
+
+               
+               
+               
+            </li>
+
+            <!-- More sidebar items here -->
+
+        </ul>
+    </aside>
+    {% endblock %}
+
+    {% block body %}{% endblock %}
+
+    {% block footer %}
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="copyright">
+            &copy; Copyright <strong><span>ClubNet</span></strong>. All Rights Reserved
+        </div>
+    </footer>
+    {% endblock %}
+</body>
+
+</html>

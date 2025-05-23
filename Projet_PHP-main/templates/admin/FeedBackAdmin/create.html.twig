@@ -1,0 +1,46 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+<body>
+<main id="main" class="main">
+    <div class="container" data-aos="fade-up">
+        {{ form_start(form) }}
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="form-group mb-3">
+                {{ form_label(form.idClub, 'Select Club') }}
+                {{ form_widget(form.idClub, {'attr': {'class': 'form-control', 'placeholder': 'Choose a club'}}) }}
+              </div>
+              <div class="form-group mb-3">
+                {{ form_label(form.idUser, 'Select Person') }}
+                {{ form_widget(form.idUser, {'attr': {'class': 'form-control', 'placeholder': 'Choose a person'}}) }}
+              </div>
+              <div class="form-group mb-3">
+                {{ form_label(form.dateFeedback, 'Feedback Date') }}
+                {{ form_widget(form.dateFeedback, {'attr': {'class': 'form-control', 'placeholder': 'Select a date'}}) }}
+              </div>
+              <div class="form-group mb-3">
+                {{ form_label(form.commentaire, 'Your Comment') }}
+                {{ form_widget(form.commentaire, {'attr': {'class': 'form-control', 'placeholder': 'Enter your feedback here'}}) }}
+              </div>
+              <div class="form-group mb-3">
+                {{ form_label(form.statusFeedback, 'Status') }}
+                {{ form_widget(form.statusFeedback, {'attr': {'class': 'form-control', 'placeholder': 'Select status'}}) }}
+              </div>
+            
+              <div class="form-group mb-3">
+                {{ form_label(form.avis, 'Rating') }}
+                {{ form_widget(form.avis, {'attr': {'class': 'form-control', 'placeholder': 'Select a rating'}}) }}
+              </div>
+
+              <div class="form-group text-center mt-4">
+                {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                <a href="{{ path('admin') }}" class="btn btn-secondary">Return to Admin Dashboard</a>
+              </div>
+            </div>
+          </div>
+        {{ form_end(form) }}
+    </div>
+    </main><!-- End Feedback Form -->
+</body>
+{% endblock %}

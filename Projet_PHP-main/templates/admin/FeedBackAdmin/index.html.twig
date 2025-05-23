@@ -1,0 +1,50 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+<body>
+  <main id="main" class="main">   
+    <div class="container" data-aos="fade-up">
+      <h2>List of Feedbacks</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Club</th>
+            <th>Person</th>
+            <th>Comment</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for feedback in feedbacks %}
+            <tr>
+              <td>{{ feedback.idFeedback }}</td>
+              <td>{{ feedback.idClub.nomClub }}</td>
+              <td>{{ feedback.idUser.fullName }}</td>
+              <td>{{ feedback.commentaire }}</td>
+              <td>
+                <span class="badge {% if feedback.statusFeedback == 'Approved' %}bg-success{% else %}bg-warning{% endif %}">
+                  {{ feedback.statusFeedback }}
+                </span>
+              </td>
+              <td>
+                <a href="{{ path('app_feedback_show', { id: feedback.idFeedback }) }}" class="btn btn-info">View</a>
+                <form action="{{ path('app_feedback_delete', { id: feedback.idFeedback }) }}" method="post" style="display:inline;">
+                  <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ feedback.idFeedback) }}">
+                  <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="6" class="text-center">No feedback available.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+{% endblock %}
+

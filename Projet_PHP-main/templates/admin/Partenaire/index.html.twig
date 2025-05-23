@@ -1,0 +1,40 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+<body>
+    <main id="main" class="main">
+    <div class="container" data-aos="fade-up">
+        <h1>Liste des Partenaires</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom du Partenaire</th>
+                    <th>Club</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for partenaire in partenaires %}
+                    <tr>
+                        <td>{{ partenaire.nomPartenaire }}</td>
+                        <td>{{ partenaire.clubPartenaire }}</td>
+                        <td>{{ partenaire.typePartenaire }}</td>
+                        <td>
+                            <a href="{{ path('admin_partenaire_show', {'id': partenaire.idPartenaire}) }}">Voir</a>
+                            <a href="{{ path('admin_partenaire_edit', {'id': partenaire.idPartenaire}) }}">Éditer</a>
+                            <a href="{{ path('admin_partenaire_delete', {'id': partenaire.idPartenaire}) }}"
+                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?')">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('admin_partenaire_new') }}">Ajouter un Nouveau Partenaire</a>
+      </div>
+
+
+</main>
+</body>
+{% endblock %}
+      

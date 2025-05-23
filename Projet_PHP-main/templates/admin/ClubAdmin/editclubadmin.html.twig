@@ -1,0 +1,73 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+<body>
+<main id="main" class="main">
+    <div class="container mt-4 d-flex justify-content-center">
+        <div class="col-md-6">
+            <h2>{{ title }}</h2>
+            <h3>Edit the details of the club.</h3>
+
+            {{ form_start(form) }}
+
+            <div class="mb-4">
+                {{ form_label(form.nomClub) }}
+                {{ form_widget(form.nomClub, { 'attr': {'class': 'form-control', 'placeholder': 'Enter club name'} }) }}
+                {{ form_errors(form.nomClub) }}
+            </div>
+
+            <div class="mb-4">
+                {{ form_label(form.categorieClub) }}
+                {{ form_widget(form.categorieClub, { 'attr': {'class': 'form-select', 'placeholder': 'Select category'} }) }}
+                {{ form_errors(form.categorieClub) }}
+            </div>
+
+            <div class="mb-4">
+                {{ form_label(form.dateCreationClub) }}
+                {{ form_widget(form.dateCreationClub, { 'attr': {'class': 'form-control', 'placeholder': 'Select creation date'} }) }}
+                {{ form_errors(form.dateCreationClub) }}
+            </div>
+
+            <div class="mb-4">
+                {{ form_label(form.adresseClub) }}
+                {{ form_widget(form.adresseClub, { 'attr': {'class': 'form-control', 'placeholder': 'Enter club address'} }) }}
+                {{ form_errors(form.adresseClub) }}
+            </div>
+
+            <div class="mb-4">
+                {{ form_label(form.telClub) }}
+                {{ form_widget(form.telClub, { 'attr': {'class': 'form-control', 'placeholder': 'Enter phone number'} }) }}
+                {{ form_errors(form.telClub) }}
+            </div>
+
+            <div class="mb-4">
+                {{ form_label(form.siteWeb) }}
+                {{ form_widget(form.siteWeb, { 'attr': {'class': 'form-control', 'placeholder': 'Enter website URL'} }) }}
+                {{ form_errors(form.siteWeb) }}
+            </div>
+
+            <div class="mb-4">
+                {{ form_label(form.statusClubs) }}
+                {{ form_widget(form.statusClubs, { 'attr': {'class': 'form-select'} }) }}
+                {{ form_errors(form.statusClubs) }}
+            </div>
+
+            {% if form.attribute5 is defined %}
+                <div class="mb-4">
+                    {{ form_label(form.attribute5) }}
+                    {{ form_widget(form.attribute5, { 'attr': {'class': 'form-control', 'placeholder': 'Additional information'} }) }}
+                    {{ form_errors(form.attribute5) }}
+                </div>
+            {% endif %}
+
+
+            <div class="mb-4">
+                {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-primary btn-block'} }) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+    </main>
+</body>
+{% endblock %}

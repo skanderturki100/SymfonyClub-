@@ -1,0 +1,172 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Créer une nouvelle Innovation{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        background: linear-gradient(135deg, #eef2f3, #8fa9b7);
+        min-height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        margin: 50px auto;
+    }
+    h1 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #2c3e50;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    form label {
+        font-weight: bold;
+        margin-top: 15px;
+        display: block;
+        color: #34495e;
+    }
+    form input, form textarea, form select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 16px;
+        color: #2c3e50;
+    }
+    form input:focus, form textarea:focus, form select:focus {
+        border-color: #27ae60;
+        outline: none;
+        box-shadow: 0 0 5px rgba(39, 174, 96, 0.5);
+    }
+    .btn-submit {
+        background-color: #27ae60;
+        border: none;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .btn-submit:hover {
+        background-color: #229954;
+    }
+    .btn-back {
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+        font-size: 14px;
+        text-decoration: none;
+        color: #34495e;
+        transition: color 0.3s ease;
+    }
+    .btn-back:hover {
+        color: #27ae60;
+    }
+    .error {
+        color: red;
+        font-size: 14px;
+    }
+</style>
+
+<body>
+    <main id="main" class="main">
+
+
+<div class="container">
+    <h1>Créer une Nouvelle Innovation</h1>
+
+    <form action="{{ path('innovation_new') }}" method="post" id="innovationForm">
+        <label for="idMembre">ID Membre</label>
+        <input type="number" id="idMembre" name="idMembre" required>
+        <div class="error" id="errorIdMembre"></div>
+
+        <label for="nomClub">Nom du Club</label>
+        <input type="text" id="nomClub" name="nomClub" required>
+        <div class="error" id="errorNomClub"></div>
+
+        <label for="descriptionInnovation">Description</label>
+        <textarea id="descriptionInnovation" name="descriptionInnovation" rows="4" required></textarea>
+
+        <label for="titre">Titre</label>
+        <input type="text" id="titre" name="titre" required>
+        <div class="error" id="errorTitre"></div>
+
+        <label for="dateCreationInnovation">Date de Création</label>
+        <input type="date" id="dateCreationInnovation" name="dateCreationInnovation" required>
+        <div class="error" id="errorDate"></div>
+
+        <label for="statusInnovation">Status</label>
+        <select id="statusInnovation" name="statusInnovation" required>
+            <option value="" disabled selected>Choisissez un statut</option>
+            <option value="Approuvé">Approuvé</option>
+            <option value="En attente">En attente</option>
+            <option value="Rejeté">Rejeté</option>
+        </select>
+
+        <button type="submit" class="btn-submit">Créer</button>
+    </form>
+
+    <a href="{{ path('admin_innovation_index') }}" class="btn-back">Retour à la liste des innovations</a>
+</div>
+
+<script>
+    document.getElementById('innovationForm').addEventListener('submit', function (event) {
+        let isValid = true;
+
+        // Validation de l'ID Membre (doit avoir une longueur de 8 chiffres)
+        const idMembre = document.getElementById('idMembre').value;
+        if (idMembre.length !== 8) {
+            document.getElementById('errorIdMembre').textContent = "L'ID Membre doit avoir 8 chiffres.";
+            isValid = false;
+        } else {
+            document.getElementById('errorIdMembre').textContent = "";
+        }
+
+        // Validation du nom du Club (doit être une chaîne de texte valide)
+        const nomClub = document.getElementById('nomClub').value;
+        if (!nomClub.trim()) {
+            document.getElementById('errorNomClub').textContent = "Le nom du club ne peut pas être vide.";
+            isValid = false;
+        } else {
+            document.getElementById('errorNomClub').textContent = "";
+        }
+
+        // Validation du titre (doit être une chaîne de texte valide)
+        const titre = document.getElementById('titre').value;
+        if (!titre.trim()) {
+            document.getElementById('errorTitre').textContent = "Le titre ne peut pas être vide.";
+            isValid = false;
+        } else {
+            document.getElementById('errorTitre').textContent = "";
+        }
+
+        // Validation de la date (doit être égale à la date d'aujourd'hui)
+        const dateCreationInnovation = document.getElementById('dateCreationInnovation').value;
+        const today = new Date().toISOString().split('T')[0]; // Date au format 'YYYY-MM-DD'
+        if (dateCreationInnovation !== today) {
+            document.getElementById('errorDate').textContent = "La date de création doit être aujourd'hui.";
+            isValid = false;
+        } else {
+            document.getElementById('errorDate').textContent = "";
+        }
+
+        // Si une erreur est détectée, empêcher l'envoi du formulaire
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+</script>
+</main>
+</body>
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Créer une nouvelle Ressource{% endblock %}
+
+{% block body %}
+<body>
+  <main id="main" class="main">
+    <div class="container-fluid mt-5">
+        <!-- Titre principal avec animation -->
+        <h1 class="section-header animate__animated animate__fadeIn text-center mb-5">Créer une nouvelle ressource</h1>
+
+        <!-- Début du formulaire -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                {{ form_start(form) }}
+
+                <!-- Champ pour le nom de la ressource -->
+                <div class="form-group mb-4"> 
+                    <label for="{{ form.nom.vars.id }}" class="form-label">Nom</label>
+                    {{ form_widget(form.nom, { 'attr': {'class': 'form-control custom-input interactive-input border-burgundy'} }) }}
+                    {% if form.nom.vars.errors|length > 0 %}
+                        <div class="alert alert-danger">
+                            {{ form_errors(form.nom) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Champ pour la description de la ressource -->
+                <div class="form-group mb-4">
+                    <label for="{{ form.description.vars.id }}" class="form-label">Description</label>
+                    {{ form_widget(form.description, { 'attr': {'class': 'form-control custom-input interactive-input border-burgundy'} }) }}
+                    {% if form.description.vars.errors|length > 0 %}
+                        <div class="alert alert-danger">
+                            {{ form_errors(form.description) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Champ pour la quantité de la ressource -->
+                <div class="form-group mb-4">
+                    <label for="{{ form.quantite.vars.id }}" class="form-label">Quantité</label>
+                    {{ form_widget(form.quantite, { 'attr': {'class': 'form-control custom-input interactive-input border-burgundy'} }) }}
+                    {% if form.quantite.vars.errors|length > 0 %}
+                        <div class="alert alert-danger">
+                            {{ form_errors(form.quantite) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Champ pour l'état de la ressource avec un menu déroulant -->
+                <div class="form-group mb-4">
+                    <label for="{{ form.etat.vars.id }}" class="form-label">Etat</label>
+                    <div class="custom-dropdown">
+                        {{ form_widget(form.etat, { 'attr': {'class': 'form-control custom-input interactive-input border-burgundy dropdown-style'} }) }}
+                    </div>
+                    {% if form.etat.vars.errors|length > 0 %}
+                        <div class="alert alert-danger">
+                            {{ form_errors(form.etat) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Champ pour télécharger la photo de la ressource -->
+                <div class="form-group mb-4">
+                    <label for="{{ form.photo.vars.id }}" class="form-label">Photo</label>
+                    {{ form_widget(form.photo, { 'attr': {'class': 'form-control custom-input interactive-input border-burgundy'} }) }}
+                    {% if form.photo.vars.errors|length > 0 %}
+                        <div class="alert alert-danger">
+                            {{ form_errors(form.photo) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Bouton de soumission du formulaire -->
+                <div class="form-group">
+                    {{ form_row(form.submit, { 'attr': {'class': 'btn btn-danger btn-custom w-100'} }) }}
+                </div>
+
+                {{ form_end(form) }}
+                
+
+                <!-- Lien pour revenir à la liste des ressources -->
+                <a href="{{ path('app_ressources') }}" class="btn btn-custom btn-back mt-3 w-100">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+            </div>
+        </div>
+    </div>
+     </main><!-- End #main -->
+</body>
+{% endblock %}

@@ -1,0 +1,68 @@
+
+{% extends 'baseAdmin.html.twig' %}
+
+
+{% block title %}Détails de la ressource{% endblock %}
+
+{% block body %}
+<body>
+  <main id="main" class="main">
+    <div class="container mt-5">
+        <h1 class="text-center animate__animated animate__fadeIn">Détails de la ressource</h1>
+        
+        <div class="card mt-4 shadow-lg p-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><strong>Nom :</strong></h4>
+                    <p class="animate__animated animate__fadeIn">{{ ressource.nom }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h4><strong>Quantité :</strong></h4>
+                    <p class="animate__animated animate__fadeIn">{{ ressource.quantite }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mt-3">
+                    <h4><strong>Description :</strong></h4>
+                    <p class="animate__animated animate__fadeIn">{{ ressource.description }}</p>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h4><strong>État :</strong></h4>
+                    <p class="animate__animated animate__fadeIn">{{ ressource.etat == 'En Marche' ? 'En Marche' : 'En maintenance' }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h4><strong>Photo :</strong></h4>
+                    {% if ressource.photo %}
+                        <img src="{{ asset('uploads/photos/' ~ ressource.photo) }}" alt="Photo de la ressource" class="img-fluid rounded shadow" style="max-width: 300px;">
+                    {% else %}
+                        <p class="animate__animated animate__fadeIn">Aucune photo disponible.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-12 text-center">
+                    <h4><strong>QR Code pour réservation :</strong></h4>
+                    <img src="{{ qrCode }}" alt="QR Code pour réserver la ressource" class="img-fluid mt-3">
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{{ path('app_ressources_edit', {id: ressource.id}) }}" class="btn btn-warning btn-lg animate__animated animate__fadeIn">Modifier</a>
+                <a href="{{ path('app_ressources_delete', {id: ressource.id}) }}" class="btn btn-danger btn-lg animate__animated animate__fadeIn">Supprimer</a>
+                
+                <a href="{{ path('app_ressources') }}" class="btn btn-primary btn-lg animate__animated animate__fadeIn">Retour à la liste</a>
+
+                <a href="{{ path('app_reservations_new', { ressourceId: ressource.id }) }}" class="btn btn-success btn-lg mt-3">
+                    <i class="fas fa-plus-circle"></i> Ajouter une réservation
+                </a>
+            </div>
+        </div>
+    </div>
+     </main><!-- End #main -->
+</body>
+{% endblock %}

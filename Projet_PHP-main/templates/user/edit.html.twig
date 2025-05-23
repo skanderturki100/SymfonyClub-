@@ -1,0 +1,53 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+<body>
+    <main id="main" class="main">
+<div class="container mt-5">
+    <h1 class="text-center">Modification de l'Utilisateur</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {{ form_start(form) }}
+            
+            <div class="mb-3">
+                {{ form_label(form.fullName) }}
+                {{ form_widget(form.fullName) }}
+                {{ form_errors(form.fullName) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.pseudo) }}
+                {{ form_widget(form.pseudo) }}
+                {{ form_errors(form.pseudo) }}
+            </div>
+
+            {# <div class="mb-3">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+                {{ form_errors(form.email) }}
+            </div> #}
+
+            <div class="mb-3">
+                {{ form_label(form.plainPassword) }}
+                {{ form_widget(form.plainPassword) }}
+                {{ form_errors(form.plainPassword) }}
+            </div>
+
+            {# <div class="mb-3">
+                {{ form_label(form.plainPassword.second) }}
+                {{ form_widget(form.plainPassword.second) }}
+                {{ form_errors(form.plainPassword.second) }}
+            </div> #}
+
+            <div class="d-flex justify-content-between">
+                {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-primary'} }) }}
+                <a href="{{ path('admin') }}" class="btn btn-secondary">Back</a>
+            </div>
+            
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+</main>
+</body>
+{% endblock %}

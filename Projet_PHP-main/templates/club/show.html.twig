@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ club.nomClub }}{% endblock %}
+
+{% block body %}
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <a href="{{path('app_homepage')}}" class="logo d-flex align-items-center">
+        <img src="{{ asset('img/logo.png') }}" alt="">
+        <h1 class="sitename">clubNet</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+        <li><a href="{{path('app_homepage')}}" >Home</a></li>
+        <li><a href="{{path('app_club_index')}}">Club</a></li>
+        <li><a href="{{path('app_feedback_index')}}">Feedback</a></li>
+        <li><a href="{{ path('app_partenaire_index') }}">Partenaire</a></li>
+        <li><a href="{{ path('user_events_index') }}">Event</a></li>
+        <li><a href="{{ path('user_innovation_index') }}">Innovation</a></li>
+        <li><a href="{{ path('app_ressourcess') }}">Resources</a></li>
+        <li><a href="{{path('app_reservationss')}}" >Reservations</a></li>
+        <li><a href="{{path('app_contact')}}" >Contact</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-toggle">Options</a>
+            <ul class="dropdown-menu">
+                <li><a href="{{path('app_login')}}">Sign in</a></li>
+                <li><a href="{{path('app_register')}}">Register</a></li>
+            </ul>
+        </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Page Title -->
+    <div class="page-title dark-background">
+      <div class="container position-relative">
+        <h1>{{ club.nomClub }}</h1>
+        <p>Details of the club {{ club.nomClub }}.</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="{{ path('app_club_index') }}">Home</a></li>
+            <li><a href="{{ path('app_club_index') }}">Clubs</a></li>
+            <li class="current">{{ club.nomClub }}</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title
+
+    <!-- Starter Section Section -->
+    <section id="starter-section" class="starter-section section d-flex justify-content-center align-items-center min-vh-100">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Club Details</h2>
+        <p>Here are the details of the club "{{ club.nomClub }}"</p>
+        {% if club.photo %}
+          <img src="{{ vich_uploader_asset(club, 'photoFile') }}" alt="{{ club.nomClub }}" class="img-fluid">
+        {% else %}
+          <p>No image available</p>
+        {% endif %}
+      </div><!-- End Section Title
+
+      <!-- Club Details -->
+      <div class="container" data-aos="fade-up">
+        <ul>
+          <li><strong>Category:</strong> {{ club.categorieClub }}</li>
+          <li><strong>Creation Date:</strong> {{ club.dateCreationClub|date('Y-m-d') }}</li>
+          <li><strong>Location:</strong> {{ club.adresseClub }}</li>
+          <li><strong>Phone:</strong> {{ club.telClub }}</li>
+          <li><strong>Website:</strong> <a href="{{ club.siteWeb }}" target="_blank">{{ club.siteWeb }}</a></li>
+          <li><strong>Status:</strong> {{ club.statusClubs }}</li>
+          <li><strong>Attribute5:</strong> {{ club.attribute5 }}</li>
+        </ul>
+
+        <div class="container text-center">
+          <a href="{{ path('app_club_index') }}" class="btn btn-secondary">Back to Club List</a>
+          <a href="{{ path('app_club_edit', { id: club.idClub }) }}" class="btn btn-warning">Apply for Club</a>
+        </div>
+
+      </div>
+
+    </section><!-- /Starter Section Section -->
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">clubNet</h3>
+      <p>Passez à l'action, ouvrez-vous au monde et rencontrez de nouveaux amis</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-skype"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">clubNet</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
+  <script src="{{ asset('vendor/aos/aos.js') }}"></script>
+  <script src="{{ asset('vendor/purecounter/purecounter_vanilla.js') }}"></script>
+  <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ asset('vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ asset('vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+  <script src="{{ asset('vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+
+  <!-- Main JS File -->
+  <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}
+

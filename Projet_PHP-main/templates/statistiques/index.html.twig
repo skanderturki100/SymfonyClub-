@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistiques des Ressources</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center mt-5">Statistiques des Ressources</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total des Ressources</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_resources }}</h5>
+                    <p class="card-text">Nombre total de ressources dans le système.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Ressources en Stock</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_in_stock }}</h5>
+                    <p class="card-text">Nombre de ressources actuellement en stock.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Ressources en Maintenance</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_in_maintenance }}</h5>
+                    <p class="card-text">Nombre de ressources actuellement en maintenance.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Ressources non en Stock</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_not_in_stock }}</h5>
+                    <p class="card-text">Ressources qui ne sont pas en stock actuellement.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Ressources Disponibles</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_available }}</h5>
+                    <p class="card-text">Nombre de ressources disponibles pour l'utilisation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphiques -->
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <canvas id="stockChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="statusChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts pour les graphiques -->
+<script>
+    // Ressources en stock et hors stock
+    new Chart(document.getElementById('stockChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['En Stock', 'Non en Stock'],
+            datasets: [{
+                data: [{{ total_in_stock }}, {{ total_not_in_stock }}],
+                backgroundColor: ['#36A2EB', '#FF6384']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' }
+            }
+        }
+    });
+
+    // Statut des ressources
+    new Chart(document.getElementById('statusChart'), {
+        type: 'pie',
+        data: {
+            labels: ['En Maintenance', 'Disponibles'],
+            datasets: [{
+                data: [{{ total_in_maintenance }}, {{ total_available }}],
+                backgroundColor: ['#FFCE56', '#4BC0C0']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

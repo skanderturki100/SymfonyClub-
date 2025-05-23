@@ -1,0 +1,241 @@
+{% extends 'baseAdmin.html.twig' %}
+
+
+{% block title %}Liste des Ressources{% endblock %}
+
+{% block body %}
+<body>
+  <main id="main" class="main">
+<div class="container py-5">
+    <!-- En-tête -->
+    <header class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="page-title">Liste des Ressources</h1>
+        <div class="d-flex">
+            <button id="cardIcon" class="btn btn-outline-primary btn-sm me-2" title="Affichage en cartes">
+                <i class="bi bi-grid-3x3-gap-fill"></i>
+            </button>
+            <button id="tableIcon" class="btn btn-outline-primary btn-sm" title="Affichage en tableau">
+                <i class="bi bi-table"></i>
+            </button>
+            <a href="{{ path('app_ressources_new') }}" class="btn btn-success btn-sm ms-2">
+                <i class="bi bi-plus-circle"></i> Ajouter Ressource
+            </a>
+            <a href="{{ path('app_ressources_pdf') }}" class="btn btn-primary">Générer le PDF des Ressources</a>
+
+            
+
+
+        </div>
+    
+    </header>
+
+ 
+    
+  <!-- Barre de recherche et filtres -->
+<div class="row mb-4">
+    <!-- Champ de recherche -->
+    <div class="col-md-3 mb-2 mb-md-0">
+        <input type="text" id="searchBar" class="form-control form-control-lg" placeholder="Rechercher par nom..." style="width: 100%; height: 45px;">
+    </div>
+    
+    <!-- Filtre par quantité -->
+    <div class="col-md-2 mb-2 mb-md-0">
+        <select id="quantityFilter" class="form-select form-select-lg" style="width: 120%; height: 45px;">
+            <option value="">Filtrer par quantité</option>
+            <option value="inStock">En stock</option>
+            <option value="outOfStock">Rupture de stock</option>
+        </select>
+    </div>
+    
+    <!-- Filtre par état -->
+    <div class="col-md-2 mb-2 mb-md-0 ms-md-4">
+        <select id="etatFilter" class="form-select form-select-lg" style="width: 100%; height: 45px;">
+            <option value="">Filtrer par état</option>
+            <option value="En Marche">En Marche</option>
+            <option value="maintenance">En maintenance</option>
+        </select>
+    </div>
+
+    <!-- Affichage du nombre de résultats -->
+    <div class="col-md-2 text-end text-muted mb-2 mb-md-0 align-self-center">
+        <small id="resultCount">0 résultats</small>
+    </div>
+</div>
+
+
+    <!-- Vue en cartes -->
+    <div id="cardView" class="row g-4">
+        {% for ressource in ressources %}
+            <div class="col-md-4 ressource-item" data-name="{{ ressource.nom|lower }}" data-quantity="{{ ressource.quantite }}" data-etat="{{ ressource.etat }}">
+                <div class="card shadow-lg h-100 border-0 rounded-3 transition-all duration-300 hover:shadow-xl hover:scale-105">
+                    <div class="card shadow-lg h-100 border-0 rounded-3 transition-all duration-300 hover:shadow-xl hover:scale-105">
+    <div class="card-img-top position-relative">
+        {% if ressource.photo %}
+            <img src="{{ asset('uploads/photos/' ~ ressource.photo) }}" alt="{{ ressource.nom }}" class="img-fluid rounded-top" style="max-height: 200px; object-fit: cover;">
+        {% else %}
+            <img src="https://via.placeholder.com/400x250" alt="Image placeholder" class="img-fluid rounded-top" style="max-height: 200px; object-fit: cover;">
+        {% endif %}
+
+        {% if ressource.quantite == 0 %}
+            <span class="badge bg-danger position-absolute top-0 start-0 m-2">Rupture</span>
+        {% elseif ressource.quantite > 0 %}
+            <span class="badge bg-success position-absolute top-0 start-0 m-2">En stock</span>
+        {% endif %}
+    </div>
+</div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-truncate text-dark">{{ ressource.nom }}</h5>
+                        <p class="card-text text-truncate text-muted">{{ ressource.description }}</p>
+                        <p class="card-text mb-1">
+                            <strong>Quantité :</strong> {{ ressource.quantite }}
+                        </p>
+                        <p class="card-text">
+                            <strong>État :</strong>
+                            <span class="badge {{ ressource.etat == 'En Marche' ? 'bg-success' : 'bg-warning text-dark' }}">
+                                {{ ressource.etat == 'En Marche' ? 'En Marche' : 'En maintenance' }}
+                            </span>
+                        </p>
+                        <div class="mt-auto">
+                            <a href="{{ path('app_ressources_show', {id: ressource.id}) }}" class="btn btn-primary btn-sm w-100 mb-2">Voir</a>
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ path('app_ressources_edit', {id: ressource.id}) }}" class="btn btn-warning btn-sm text-white">Modifier</a>
+                                <a href="{{ path('app_ressources_delete', {id: ressource.id}) }}" class="btn btn-danger btn-sm text-white" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette ressource ?')">Supprimer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">Aucune ressource trouvée</p>
+        {% endfor %}
+    </div>
+
+    <!-- Vue en tableau -->
+    <div id="tableView" class="d-none">
+        <table class="table table-striped table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Photo</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Quantité</th>
+                    <th>État</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ressource in ressources %}
+                    <tr class="ressource-item" data-name="{{ ressource.nom|lower }}" data-quantity="{{ ressource.quantite }}" data-etat="{{ ressource.etat }}">
+                        <td>
+                            {% if ressource.photo %}
+                                <img src="{{ asset('uploads/photos/' ~ ressource.photo) }}" alt="{{ ressource.nom }}" class="img-fluid rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                            {% else %}
+                                <img src="https://via.placeholder.com/80x80" alt="Image placeholder" class="img-fluid rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                            {% endif %}
+                        </td>
+                        <td>{{ ressource.nom }}</td>
+                        <td>{{ ressource.description }}</td>
+                        <td>{{ ressource.quantite }}</td>
+                        <td>
+                            <span class="badge {{ ressource.etat == 'En Marche' ? 'bg-success' : 'bg-warning text-dark' }}">
+                                {{ ressource.etat == 'En Marche' ? 'En Marche' : 'En maintenance' }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{{ path('app_ressources_show', {id: ressource.id}) }}" class="btn btn-primary btn-sm">Voir</a>
+                            <a href="{{ path('app_ressources_edit', {id: ressource.id}) }}" class="btn btn-warning btn-sm text-white">Modifier</a>
+                            <a href="{{ path('app_ressources_delete', {id: ressource.id}) }}" class="btn btn-danger btn-sm text-white" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette ressource ?')">Supprimer</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">Aucune ressource trouvée</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+
+    </div>
+</div>
+
+<script>
+    // Gestion des vues
+    const cardIcon = document.getElementById('cardIcon');
+    const tableIcon = document.getElementById('tableIcon');
+    const cardView = document.getElementById('cardView');
+    const tableView = document.getElementById('tableView');
+
+    cardIcon.addEventListener('click', () => {
+        cardView.classList.remove('d-none');
+        tableView.classList.add('d-none');
+    });
+
+    tableIcon.addEventListener('click', () => {
+        cardView.classList.add('d-none');
+        tableView.classList.remove('d-none');
+    });
+
+    // Recherche avec filtrage par nom, quantité et état
+    const searchBar = document.getElementById('searchBar');
+    const quantityFilter = document.getElementById('quantityFilter');
+    const etatFilter = document.getElementById('etatFilter');
+    const resultCount = document.getElementById('resultCount');
+
+    const debounce = (func, delay) => {
+        let timer;
+        return function(...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => func.apply(this, args), delay);
+        };
+    };
+
+    const filterItems = () => {
+        const nameSearch = searchBar.value.toLowerCase();
+        const quantitySearch = quantityFilter.value;
+        const etatSearch = etatFilter.value;
+
+        const items = document.querySelectorAll('.ressource-item');
+        let visibleCount = 0;
+
+        items.forEach(item => {
+            const name = item.getAttribute('data-name');
+            const quantity = item.getAttribute('data-quantity');
+            const etat = item.getAttribute('data-etat');
+
+            let matches = true;
+
+            if (name && !name.includes(nameSearch)) {
+                matches = false;
+            }
+            if (quantitySearch === "inStock" && quantity == 0) {
+                matches = false;
+            }
+            if (quantitySearch === "outOfStock" && quantity > 0) {
+                matches = false;
+            }
+            if (etatSearch && etat !== etatSearch) {
+                matches = false;
+            }
+
+            if (matches) {
+                item.style.display = '';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        resultCount.textContent = `${visibleCount} ressource(s) trouvée(s)`;
+    };
+    
+    // Application du debounce
+    searchBar.addEventListener('input', debounce(filterItems, 300));
+    quantityFilter.addEventListener('change', filterItems);
+    etatFilter.addEventListener('change', filterItems);
+</script>
+ </main><!-- End #main -->
+</body>
+
+
+{% endblock %}

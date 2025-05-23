@@ -1,0 +1,31 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    annotations: false
+    http_method_override: false
+    handle_all_throwables: true
+
+    # Enables session support. Note that the session will ONLY be started if you read or write from it.
+    session:
+         handler_id: null  # Default Symfony session handler (stores sessions in files)
+         cookie_lifetime: 3600  # Session cookie lifetime in seconds (1 hour)
+         cookie_secure: auto    # Auto-detect if HTTPS is used and set secure flag for the cookie
+         cookie_samesite: lax   # SameSite cookie policy ('lax' is generally fine for most cases)
+         cookie_httponly: true  # Prevent JavaScript from accessing session cookies
+         enabled: true          # Enable session management in Symfony
+         name: PHPSESSID        # Name of the session cookie
+         save_path: "%kernel.cache_dir%/sessions"  # Directory where session files are saved
+         gc_maxlifetime: 3600   # Max session lifetime (1 hour)
+         gc_probability: 1      # Probability of session garbage collection (1 in 100)
+         gc_divisor: 100        # Probability divisor (part of the GC configuration)
+         use_cookies: true      # Use cookies for session management
+
+    # Enable PHP error logging
+    php_errors:
+        log: true
+
+# Testing configuration: Mock session for tests
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file  # Use mock file storage in testing environment

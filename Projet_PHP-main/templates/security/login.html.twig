@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+        <a href="{{ path('app_homepage') }}" class="logo d-flex align-items-center">
+            <img src="{{ asset('img/logo.jpg') }}" alt="logo">
+            <h1 class="sitename">clubNet</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+        <ul>
+        <li><a href="{{path('app_homepage')}}" >Home</a></li>
+        <li><a href="{{path('app_club_index')}}">Club</a></li>
+        <li><a href="{{path('app_feedback_index')}}">Feedback</a></li>
+        <li><a href="{{ path('app_partenaire_index') }}">Partenaire</a></li>
+        <li><a href="{{ path('user_events_index') }}">Event</a></li>
+        <li><a href="{{ path('user_innovation_index') }}">Innovation</a></li>
+        <li><a href="{{ path('app_ressourcess') }}">Resources</a></li>
+        <li><a href="{{path('app_reservationss')}}" >Reservations</a></li>
+        <li><a href="{{path('app_contact')}}" >Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+</header>
+
+<main class="main">
+    <!-- Page Title -->
+    <div class="page-title dark-background">
+        <div class="container position-relative">
+            <h1>Connexion</h1>
+            <p>Connectez-vous pour accéder à votre compte.</p>
+        </div>
+    </div><!-- End Page Title -->
+
+    <!-- Starter Section -->
+    <section id="starter-section" class="starter-section section d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+        <div class="container d-flex justify-content-center align-items-center">
+            <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Connexion</h3>
+
+                    <form action="{{ path('app_login') }}" method="post">
+                        <!-- Email input -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Adresse Email</label>
+                            <input type="email" class="form-control" id="username" name="_username" placeholder="exemple@symrecipe.fr" value="{{ last_username }}" required>
+                            <div class="form-text">Nous ne partagerons jamais votre email avec quelqu'un d'autre.</div>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mot de Passe</label>
+                            <input type="password" class="form-control" id="password" name="_password" placeholder="********" required>
+                        </div>
+
+                        <!-- Error message if login fails -->
+                        {% if error %}
+                            <div class="alert alert-danger mt-3">
+                                <strong>Error:</strong> {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
+
+                        <!-- Remember me checkbox -->
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="rememberMe" name="_remember_me">
+                            <label class="form-check-label" for="rememberMe">
+                                Se souvenir de moi
+                            </label>
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+
+                        <!-- Register link -->
+                        <div class="text-center mt-3">
+                            <small>Pas encore inscrit ? <a href="{{ path('app_register') }}">Créer un compte</a></small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Starter Section -->
+</main>
+
+<footer id="footer" class="footer dark-background">
+    <div class="container">
+        <h3 class="sitename">clubNet</h3>
+        <p>Rejoignez-nous pour explorer et interagir avec les clubs du monde entier.</p>
+    </div>
+</footer>
+
+{% endblock %}

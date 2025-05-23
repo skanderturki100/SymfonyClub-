@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Feedback{% endblock %}
+
+{% block body %}
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <a href="{{ path('app_homepage') }}" class="logo d-flex align-items-center">
+        <img src="{{ asset('img/logo.png') }}" alt="">
+        <h1 class="sitename">clubNet</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+        <li><a href="{{path('app_homepage')}}" >Home</a></li>
+        <li><a href="{{path('app_club_index')}}">Club</a></li>
+        <li><a href="{{path('app_feedback_index')}}">Feedback</a></li>
+        <li><a href="{{ path('app_partenaire_index') }}">Partenaire</a></li>
+        <li><a href="{{ path('user_events_index') }}">Event</a></li>
+        <li><a href="{{ path('user_innovation_index') }}">Innovation</a></li>
+        <li><a href="{{ path('app_ressourcess') }}">Resources</a></li>
+        <li><a href="{{path('app_reservationss')}}" >Reservations</a></li>
+        <li><a href="{{path('app_contact')}}" >Contact</a></li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-toggle">Options</a>
+            <ul class="dropdown-menu">
+                <li><a href="{{path('app_login')}}">Sign in</a></li>
+                <li><a href="{{path('app_register')}}">Register</a></li>
+            </ul>
+        </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background">
+      <div class="container position-relative">
+        <h1>Edit Feedback</h1>
+        <p>Modify the feedback details using the form below.</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="{{ path('app_club_index') }}">Home</a></li>
+            <li><a href="{{ path('app_feedback_index') }}">Feedback</a></li>
+            <li class="current">Edit Feedback</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Feedback Edit Section -->
+    <section id="feedback-section" class="feedback-section section d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Edit Feedback</h2>
+        <p>Update the details of the feedback.</p>
+      </div><!-- End Section Title -->
+
+      <!-- Form Section -->
+      <div class="container" data-aos="fade-up" style="max-width: 600px; width: 100%;">
+        <h1>Edit Feedback</h1>
+
+        <div class="container" data-aos="fade-up">
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="form-group mb-3">
+                {{ form_label(form.idClub, 'Select Club', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.idClub, {'attr': {'class': 'form-control', 'placeholder': 'Choose a club'}}) }}
+                {{ form_errors(form.idClub) }}
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_label(form.idUser, 'Select Person', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.idUser, {'attr': {'class': 'form-control', 'placeholder': 'Choose a person'}}) }}
+                {{ form_errors(form.idUser) }}
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_label(form.dateFeedback, 'Feedback Date', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.dateFeedback, {'attr': {'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}}) }}
+                {{ form_errors(form.dateFeedback) }}
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_label(form.commentaire, 'Your Comment', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.commentaire, {'attr': {'class': 'form-control', 'placeholder': 'Enter your feedback here'}}) }}
+                {{ form_errors(form.commentaire) }}
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_label(form.avis, 'Rating', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.avis, {'attr': {'class': 'form-control', 'placeholder': 'Select a rating'}}) }}
+                {{ form_errors(form.avis) }}
+            </div>
+
+            <div class="form-group text-center mt-4">
+                <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                <a href="{{ path('app_club_index') }}" class="btn btn-secondary">Back</a>
+            </div>
+        </div>
+    </div>
+        {{ form_end(form) }}
+
+        
+
+    </section><!-- End Feedback Edit Section -->
+
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">clubNet</h3>
+      <p>Connecting clubs and individuals to improve the football ecosystem.</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-twitter-x"></i></a>
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-skype"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>Copyright</span> <strong class="px-1 sitename">clubNet</strong> <span>All Rights Reserved</span>
+        </div>
+        <div class="credits">
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
+  <script src="{{ asset('vendor/aos/aos.js') }}"></script>
+  <script src="{{ asset('vendor/purecounter/purecounter_vanilla.js') }}"></script>
+  <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ asset('vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ asset('vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+  <script src="{{ asset('vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+
+  <!-- Main JS File -->
+  <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}

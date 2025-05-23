@@ -1,0 +1,186 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+
+<body>
+    <main id="main" class="main">
+<style>
+    body {
+        background: linear-gradient(135deg, #f0f4f8, #aab6c1);
+        font-family: 'Arial', sans-serif;
+    }
+    h1 {
+        text-align: center;
+        margin-top: 30px;
+        color: #2c3e50;
+        font-size: 36px;
+    }
+    .container {
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #34495e;
+        color: white;
+    }
+    tr:hover {
+        background-color: #f9f9f9;
+    }
+    .btn {
+        padding: 6px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+    .btn-show {
+        background-color: #3498db;
+        color: white;
+    }
+    .btn-show:hover {
+        background-color: #2980b9;
+    }
+    .btn-edit {
+        background-color: #f39c12;
+        color: white;
+    }
+    .btn-edit:hover {
+        background-color: #e67e22;
+    }
+    .btn-delete {
+        background-color: #e74c3c;
+        color: white;
+    }
+    .btn-delete:hover {
+        background-color: #c0392b;
+    }
+    .btn-create {
+        display: block;
+        background-color: #2ecc71;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        margin: 30px auto;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+    .btn-create:hover {
+        background-color: #27ae60;
+    }
+
+    /* Barre de recherche - Styling */
+    .search-form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .search-input {
+        width: 300px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 25px; /* Bordures arrondies */
+        font-size: 16px;
+        transition: all 0.3s ease;
+        margin-right: 10px; /* Espacement avec le bouton */
+    }
+    .search-input:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 8px rgba(52, 152, 219, 0.5); /* Ombre au focus */
+        outline: none;
+    }
+    .search-button {
+        padding: 10px 20px;
+        background-color: #3498db;
+        border: none;
+        border-radius: 25px; /* Bordures arrondies pour le bouton */
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .search-button:hover {
+        background-color: #2980b9;
+    }
+    .search-button:focus {
+        outline: none;
+    }
+</style>
+
+<div class="container">
+    <h1>Liste des Événements</h1>
+
+    <!-- Formulaire de recherche -->
+    <form method="get" action="{{ path('admin_events_index') }}" class="search-form">
+        <input type="text" name="search" placeholder="Rechercher un événement" value="{{ search }}" class="form-control search-input">
+        <button type="submit" class="btn search-button">Rechercher</button>
+    </form>
+
+    <a href="{{ path('admin_events_new') }}" class="btn btn-create">
+        <i class="fas fa-plus"></i> Créer un nouveau événement
+    </a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <a href="{{ path('admin_events_index', { 'search': search, 'sort': 'id', 'order': sortOrder == 'ASC' ? 'DESC' : 'ASC' }) }}" aria-label="Trier par ID">
+                        Id
+                    </a>
+                </th>
+                <th>
+                    <a href="{{ path('admin_events_index', { 'search': search, 'sort': 'nomEvent', 'order': sortOrder == 'ASC' ? 'DESC' : 'ASC' }) }}" aria-label="Trier par nom de l'événement">
+                        Nom
+                    </a>
+                </th>
+                <th>
+                    <a href="{{ path('admin_events_index', { 'search': search, 'sort': 'debutEvent', 'order': sortOrder == 'ASC' ? 'DESC' : 'ASC' }) }}" aria-label="Trier par date de début">
+                        Début
+                    </a>
+                </th>
+                <th>
+                    <a href="{{ path('admin_events_index', { 'search': search, 'sort': 'finEvent', 'order': sortOrder == 'ASC' ? 'DESC' : 'ASC' }) }}" aria-label="Trier par date de fin">
+                        Fin
+                    </a>
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.id }}</td>
+                    <td>{{ event.nomEvent }}</td>
+                    <td>{{ event.debutEvent|date('Y-m-d') }}</td>
+                    <td>{{ event.finEvent|date('Y-m-d') }}</td>
+                    <td>
+                        <a href="{{ path('admin_events_show', {'id': event.id}) }}" class="btn btn-show">Voir</a>
+                        <a href="{{ path('admin_events_edit', {'id': event.id}) }}" class="btn btn-edit">Modifier</a>
+                        <form method="post" action="{{ path('admin_events_delete', {'id': event.id}) }}" style="display:inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+                            <button type="submit" class="btn btn-delete">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</main>
+</body>
+{% endblock %}

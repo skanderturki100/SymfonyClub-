@@ -1,0 +1,57 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Modifier la ressource{% endblock %}
+
+{% block body %}
+<body>
+  <main id="main" class="main">
+    <div class="container mt-5">
+
+
+        <!-- Titre avec animation -->
+        <h1 class="section-header animate__animated animate__fadeIn">Modifier la ressource</h1>
+
+        <!-- Formulaire avec les champs animés -->
+        {{ form_start(form) }}
+        
+        <!-- Champs avec animation de focus et classes améliorées -->
+        {% for field in ['nom', 'description', 'quantite', 'etat'] %}
+            <div class="form-group mb-4">
+                <label for="{{ form[field].vars.id }}" class="form-label">{{ form[field].vars.label }}</label>
+                {{ form_row(form[field], { 'attr': {'class': 'form-control custom-input interactive-input border-burgundy'} }) }}
+            </div>
+        {% endfor %}
+
+        {# Champ pour la photo avec animation et style avancé #}
+        <div class="form-group mb-4">
+            <label for="file-upload" class="form-label">Photo</label>
+
+            {% if ressource.photo %}
+                <div class="current-photo mb-3">
+                    <p>Photo actuelle :</p>
+                    <img src="{{ asset('uploads/photos/' ~ ressource.photo) }}" alt="Photo de la ressource"
+                        class="current-photo-img">
+                </div>
+            {% endif %}
+            
+            <p class="text-muted">Vous pouvez laisser ce champ vide si vous ne souhaitez pas modifier la photo actuelle.</p>
+            <div class="custom-file-upload">
+            
+</div>
+
+
+
+
+
+        <!-- Bouton de soumission avec animation -->
+        {{ form_end(form) }}
+
+        <!-- Lien vers la liste -->
+        <a href="{{ path('app_ressources') }}" class="btn btn-custom btn-back mt-3">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
+ </main><!-- End #main -->
+</body>
+    
+{% endblock %}
